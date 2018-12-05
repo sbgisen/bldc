@@ -17,10 +17,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     */
 
-#ifndef HW_MINI4_H_
-#define HW_MINI4_H_
+#ifndef HW_GISEN_H_
+#define HW_GISEN_H_
 
-#define HW_NAME					"MINI4"
+#define HW_NAME					"GISEN"
 
 // HW properties
 #define HW_HAS_DRV8301
@@ -92,10 +92,10 @@
 #define VIN_R2					2200.0
 #endif
 #ifndef CURRENT_AMP_GAIN
-#define CURRENT_AMP_GAIN		60.0
+#define CURRENT_AMP_GAIN		13200.0 //0.0132*1000000.0
 #endif
 #ifndef CURRENT_SHUNT_RES
-#define CURRENT_SHUNT_RES		0.0005
+#define CURRENT_SHUNT_RES		0.000001
 #endif
 
 // Input voltage

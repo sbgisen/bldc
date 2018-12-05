@@ -2,3 +2,9 @@
 
 build
 .dep
+
+\.cproject
+
+\.project
+
+\.settings/language\.settings\.xml

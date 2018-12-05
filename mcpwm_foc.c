@@ -2068,6 +2068,13 @@ static void do_dc_cal(void) {
 #ifdef HW_HAS_3_SHUNTS
 	m_curr2_offset = m_curr2_sum / m_curr_samples;
 #endif
+
+	//GISEN:using ACS759xCB -> Half of the VCC means 0A
+#ifdef HW_VERSION_GISEN
+	m_curr0_offset = 2048;
+	m_curr1_offset = 2048;
+	m_curr2_offset = 2048;
+#endif
 	DCCAL_OFF();
 	m_dccal_done = true;
 }

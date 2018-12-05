@@ -217,3 +217,36 @@ cd $FWPATH
 make clean
 cd $DIR
 
+################## HW MINI4 #######################
+
+COPYDIR=MINI4
+rm -f $COPYDIR/*
+
+# MINI4
+cd $FWPATH
+touch conf_general.h
+make -j8 build_args="-DHW_VERSION_MINI4"
+cd $DIR
+cp $FWPATH/build/BLDC_4_ChibiOS.bin $COPYDIR/VESC_MINI4.bin
+
+# Clean
+cd $FWPATH
+make clean
+cd $DIR
+################## HW GISEN #######################
+
+COPYDIR=GISEN
+rm -f $COPYDIR/*
+
+# GISEN
+cd $FWPATH
+touch conf_general.h
+make -j8 build_args="-DHW_VERSION_GISEN"
+cd $DIR
+cp $FWPATH/build/BLDC_4_ChibiOS.bin $COPYDIR/VESC_GISEN.bin
+
+# Clean
+cd $FWPATH
+make clean
+cd $DIR
+

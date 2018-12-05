@@ -16,7 +16,7 @@
     */
 
 #include "hw.h"
-#ifdef HW_VERSION_MINI4
+#ifdef HW_VERSION_GISEN
 
 #include "ch.h"
 #include "hal.h"
