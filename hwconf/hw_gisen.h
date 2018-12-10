@@ -86,16 +86,16 @@
 #define V_REG					3.3
 #endif
 #ifndef VIN_R1
-#define VIN_R1					39000.0
+#define VIN_R1					9419.0
 #endif
 #ifndef VIN_R2
-#define VIN_R2					2200.0
+#define VIN_R2					580.0
 #endif
 #ifndef CURRENT_AMP_GAIN
 #define CURRENT_AMP_GAIN		13200.0 //0.0132*1000000.0
 #endif
 #ifndef CURRENT_SHUNT_RES
-#define CURRENT_SHUNT_RES		0.000001
+#define CURRENT_SHUNT_RES		0.000008333
 #endif
 
 // Input voltage
@@ -210,7 +210,7 @@
 #define READ_HALL2()			palReadPad(HW_HALL_ENC_GPIO2, HW_HALL_ENC_PIN2)
 #define READ_HALL3()			palReadPad(HW_HALL_ENC_GPIO3, HW_HALL_ENC_PIN3)
 
-#define HW_DEAD_TIME_VALUE		20
+#define HW_DEAD_TIME_VALUE		200
 
 // Default setting overrides
 #ifndef MCCONF_DEFAULT_MOTOR_TYPE
@@ -226,7 +226,7 @@
 // Setting limits
 #define HW_LIM_CURRENT			-60.0, 60.0
 #define HW_LIM_CURRENT_IN		-60.0,60.0
-#define HW_LIM_CURRENT_ABS		0.0, 62.5
+#define HW_LIM_CURRENT_ABS		0.0, 200.0
 #define HW_LIM_VIN				5.5, 57.0
 #define HW_LIM_ERPM				-200e3, 200e3
 #define HW_LIM_DUTY_MIN			0.0, 0.1
