@@ -554,6 +554,7 @@ static void do_dc_cal(void) {
 #ifdef HW_HAS_3_SHUNTS
 	curr2_sum = 0;
 #endif
+
 	curr_start_samples = 0;
 	while(curr_start_samples < 4000) {};
 	curr0_offset = curr0_sum / curr_start_samples;
@@ -561,13 +562,6 @@ static void do_dc_cal(void) {
 
 #ifdef HW_HAS_3_SHUNTS
 	curr2_offset = curr2_sum / curr_start_samples;
-#endif
-
-	//GISEN:using ACS759xCB -> Half of the VCC means 0A
-#ifdef HW_VERSION_GISEN
-	curr0_offset = 2048;
-	curr1_offset = 2048;
-	curr2_offset = 2048;
 #endif
 
 	DCCAL_OFF();
