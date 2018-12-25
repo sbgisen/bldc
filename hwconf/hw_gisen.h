@@ -92,10 +92,10 @@
 #define VIN_R2					580.0
 #endif
 #ifndef CURRENT_AMP_GAIN
-#define CURRENT_AMP_GAIN		13200.0 //0.0132*1000000.0
+#define CURRENT_AMP_GAIN		1.0 //ACS759 X100B
 #endif
 #ifndef CURRENT_SHUNT_RES
-#define CURRENT_SHUNT_RES		0.000008333
+#define CURRENT_SHUNT_RES		0.0132 //ACS759 X100B
 #endif
 
 // Input voltage
@@ -205,7 +205,7 @@
 #define ADC_V_L3				ADC_Value[ADC_IND_SENS3]
 #define ADC_V_ZERO				(ADC_Value[ADC_IND_VIN_SENS] / 2)
 
-// Macros
+// Macros56
 #define READ_HALL1()			palReadPad(HW_HALL_ENC_GPIO1, HW_HALL_ENC_PIN1)
 #define READ_HALL2()			palReadPad(HW_HALL_ENC_GPIO2, HW_HALL_ENC_PIN2)
 #define READ_HALL3()			palReadPad(HW_HALL_ENC_GPIO3, HW_HALL_ENC_PIN3)
@@ -227,10 +227,10 @@
 #define HW_LIM_CURRENT			-60.0, 60.0
 #define HW_LIM_CURRENT_IN		-60.0,60.0
 #define HW_LIM_CURRENT_ABS		0.0, 200.0
-#define HW_LIM_VIN				5.5, 57.0
+#define HW_LIM_VIN				0.0, 125.0
 #define HW_LIM_ERPM				-200e3, 200e3
 #define HW_LIM_DUTY_MIN			0.0, 0.1
-#define HW_LIM_DUTY_MAX			0.0, 0.99
-#define HW_LIM_TEMP_FET			-40.0, 110.0
+#define HW_LIM_DUTY_MAX			0.0, 0.95
+#define HW_LIM_TEMP_FET			-40.0, 200.0
 
 #endif /* HW_MINI4_H_ */
