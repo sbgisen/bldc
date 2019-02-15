@@ -19,7 +19,7 @@
 
 #ifndef HW_GISEN_H_
 #define HW_GISEN_H_
-
+#define HW_VERSION_GISEN
 #define HW_NAME					"GISEN"
 
 // HW properties
@@ -210,7 +210,7 @@
 #define READ_HALL2()			palReadPad(HW_HALL_ENC_GPIO2, HW_HALL_ENC_PIN2)
 #define READ_HALL3()			palReadPad(HW_HALL_ENC_GPIO3, HW_HALL_ENC_PIN3)
 
-#define HW_DEAD_TIME_VALUE		200
+#define HW_DEAD_TIME_VALUE		1000
 
 // Default setting overrides
 #ifndef MCCONF_DEFAULT_MOTOR_TYPE
@@ -224,7 +224,7 @@
 #endif
 
 // Setting limits
-#define HW_LIM_CURRENT			-60.0, 60.0
+#define HW_LIM_CURRENT			-15.0, 15.0
 #define HW_LIM_CURRENT_IN		-60.0,60.0
 #define HW_LIM_CURRENT_ABS		0.0, 200.0
 #define HW_LIM_VIN				0.0, 125.0
