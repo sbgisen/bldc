@@ -21,7 +21,7 @@
 #define HW_GISEN_H_
 
 #define HW_NAME					"GISEN"
-
+#define HW_VERSION_GISEN
 // HW properties
 #define HW_HAS_DRV8301
 #define HW_HAS_3_SHUNTS
@@ -92,10 +92,10 @@
 #define VIN_R2					580.0
 #endif
 #ifndef CURRENT_AMP_GAIN
-#define CURRENT_AMP_GAIN		13200.0 //0.0132*1000000.0
+#define CURRENT_AMP_GAIN		132.0 //0.0132*10000.0
 #endif
 #ifndef CURRENT_SHUNT_RES
-#define CURRENT_SHUNT_RES		0.000008333
+#define CURRENT_SHUNT_RES		0.0001
 #endif
 
 // Input voltage
@@ -210,7 +210,7 @@
 #define READ_HALL2()			palReadPad(HW_HALL_ENC_GPIO2, HW_HALL_ENC_PIN2)
 #define READ_HALL3()			palReadPad(HW_HALL_ENC_GPIO3, HW_HALL_ENC_PIN3)
 
-#define HW_DEAD_TIME_VALUE		200
+#define HW_DEAD_TIME_VALUE		800
 
 // Default setting overrides
 #ifndef MCCONF_DEFAULT_MOTOR_TYPE
@@ -227,10 +227,10 @@
 #define HW_LIM_CURRENT			-60.0, 60.0
 #define HW_LIM_CURRENT_IN		-60.0,60.0
 #define HW_LIM_CURRENT_ABS		0.0, 200.0
-#define HW_LIM_VIN				5.5, 57.0
+#define HW_LIM_VIN				0.0, 70.0
 #define HW_LIM_ERPM				-200e3, 200e3
 #define HW_LIM_DUTY_MIN			0.0, 0.1
 #define HW_LIM_DUTY_MAX			0.0, 0.99
-#define HW_LIM_TEMP_FET			-40.0, 110.0
+#define HW_LIM_TEMP_FET			-40.0, 200.0
 
 #endif /* HW_MINI4_H_ */
