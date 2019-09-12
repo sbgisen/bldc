@@ -868,7 +868,7 @@ float mcpwm_foc_get_abs_motor_current(void) {
  * The magnitude of the phase currents unbalance.
  */
 float mcpwm_foc_get_abs_motor_current_unbalance(void) {
-	return (float)(m_curr_unbalance) * FAC_CURRENT;
+	return (float)0.0;//(float)(m_curr_unbalance) * FAC_CURRENT;
 }
 
 /**
