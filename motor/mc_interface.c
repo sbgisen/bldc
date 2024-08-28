@@ -1469,11 +1469,16 @@ void mc_interface_update_pid_pos_offset(float angle_now, bool store) {
 	mc_configuration *mcconf = mempools_alloc_mcconf();
 	app_configuration *appconf = app_get_configuration();
 	*mcconf = *mc_interface_get_configuration();
-	float pwr = ADC_VOLTS(ADC_IND_EXT);
-    float angle_potentiometer =
-      utils_map(pwr, appconf->app_adc_conf.voltage_start, appconf->app_adc_conf.voltage_end, 0.0, 360.0);
-	
-	mcconf->p_pid_offset += angle_potentiometer-mcconf->p_pid_offset - angle_now;
+	int adc_avg_window_size = 10;
+	float angle_potentiometer_sum = 0.0;
+	for (int i = 0; i < adc_avg_window_size; i++) {
+		float pwr = ADC_VOLTS(ADC_IND_EXT);
+		angle_potentiometer_sum +=
+			utils_map(pwr, appconf->app_adc_conf.voltage_start, appconf->app_adc_conf.voltage_end, 0.0, 360.0);
+		chThdSleepMilliseconds(10);
+	}
+	float angle_potentiometer = angle_potentiometer_sum / adc_avg_window_size;
+	mcconf->p_pid_offset = angle_potentiometer - angle_now;
 	utils_norm_angle(&mcconf->p_pid_offset);
 
 	if (store) {
