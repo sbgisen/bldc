@@ -1959,7 +1959,15 @@ static void decode_msg(uint32_t eid, uint8_t *data8, int len, bool is_replaced) 
 			app_set_configuration(appconf);
 		} break;
 
-                case CAN_PACKET_POLL_ROTOR_POS: {
+		case CAN_PACKET_ENABLE_PID_POS_OFFSET_POT_CALIB:{
+			ind=0;
+			bool enable = data8[ind++];
+			mc_configuration *mcconf = (mc_configuration*)mc_interface_get_configuration();
+			mcconf->p_pid_offset_pot_calib = enable;
+			mc_interface_set_configuration(mcconf);
+		} break;
+
+        case CAN_PACKET_POLL_ROTOR_POS: {
 			uint8_t buffer[4];
 			int32_t index = 0;
 			buffer_append_int32(buffer, (int32_t)(encoder_read_deg() * 100000.0), &index);
