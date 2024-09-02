@@ -185,8 +185,8 @@
 #ifndef MCCONF_P_PID_OFFSET
 #define MCCONF_P_PID_OFFSET				0.0		// Angle offset
 #endif
-#ifndef MCCONF_P_PID_POT_OFFSET_CALIB
-#define MCCONF_P_PID_POT_OFFSET_CALIB	false	
+#ifndef MCCONF_P_PID_OFFSET_POT_CALIB
+#define MCCONF_P_PID_OFFSET_POT_CALIB	false	
 #endif
 
 // Current control parameters

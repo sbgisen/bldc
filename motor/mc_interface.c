@@ -1470,7 +1470,7 @@ void mc_interface_update_pid_pos_offset(float angle_now, bool store) {
 	*mcconf = *mc_interface_get_configuration();
 	    
 	// Use potentiometer to calibrate the offset if enabled
-	if (mcconf->p_pid_pot_offset_calib) {
+	if (mcconf->p_pid_offset_pot_calib) {
 		const app_configuration *appconf = app_get_configuration();
 		const int adc_avg_window_size = 100;
 		float angle_potentiometer_sum = 0.0;
