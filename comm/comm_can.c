@@ -1119,6 +1119,15 @@ void comm_can_update_pid_pos_offset(int id, float angle_now, bool store) {
 			buffer, send_index, true, 0);
 }
 
+void comm_can_update_can_id(int id, int id_new) {
+  int32_t send_index = 0;
+  uint8_t buffer[8];
+
+  buffer[send_index++] = id_new;
+  comm_can_transmit_eid_replace(id | ((uint32_t)CAN_PACKET_UPDATE_CAN_ID << 8),
+                                buffer, send_index, true, 0);
+}
+
 /*
  * Get frame from RX buffer. Interface is the CAN-interface to read from. If
  * no frames are available NULL is returned.
@@ -1941,7 +1950,24 @@ static void decode_msg(uint32_t eid, uint8_t *data8, int len, bool is_replaced) 
 			mc_interface_update_pid_pos_offset(angle_now, store);
 		} break;
 
-		case CAN_PACKET_POLL_ROTOR_POS: {
+		case CAN_PACKET_UPDATE_CAN_ID: {
+			ind = 0;
+			uint8_t id_new = data8[ind++];
+			app_configuration *appconf = (app_configuration*)app_get_configuration();
+			appconf->controller_id = id_new;
+			conf_general_store_app_configuration(appconf);
+			app_set_configuration(appconf);
+		} break;
+
+		case CAN_PACKET_ENABLE_PID_POS_OFFSET_POT_CALIB:{
+			ind=0;
+			bool enable = data8[ind++];
+			mc_configuration *mcconf = (mc_configuration*)mc_interface_get_configuration();
+			mcconf->p_pid_offset_pot_calib = enable;
+			mc_interface_set_configuration(mcconf);
+		} break;
+
+        case CAN_PACKET_POLL_ROTOR_POS: {
 			uint8_t buffer[4];
 			int32_t index = 0;
 			buffer_append_int32(buffer, (int32_t)(encoder_read_deg() * 100000.0), &index);

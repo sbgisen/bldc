@@ -510,6 +510,7 @@ typedef struct {
 	float p_pid_ang_div;
 	float p_pid_gain_dec_angle;
 	float p_pid_offset;
+	bool p_pid_offset_pot_calib;
 
 	// Current controller
 	float cc_startup_boost_duty;
@@ -1163,6 +1164,8 @@ typedef enum {
 	CAN_PACKET_GNSS_LAT						= 60,
 	CAN_PACKET_GNSS_LON						= 61,
 	CAN_PACKET_GNSS_ALT_SPEED_HDOP			= 62,
+	CAN_PACKET_UPDATE_CAN_ID	            = 63,
+	CAN_PACKET_ENABLE_PID_POS_OFFSET_POT_CALIB	= 64,
 	CAN_PACKET_MAKE_ENUM_32_BITS = 0xFFFFFFFF,
 } CAN_PACKET_ID;
 
