@@ -4291,6 +4291,30 @@ static void control_current(motor_all_state_t *motor, float dt) {
 	float max_duty = fabsf(state_m->max_duty);
 	utils_truncate_number(&max_duty, 0.0, conf_now->l_max_duty);
 
+	float rpm_now = mc_interface_get_rpm();
+
+    // RPM max
+	const float rpm_pos_cut_start = conf_now->l_max_erpm * conf_now->l_erpm_start;
+	const float rpm_pos_cut_end = conf_now->l_max_erpm;
+	if (rpm_now < (rpm_pos_cut_start + 0.1)) {
+		// pass
+	} else if (rpm_now > (rpm_pos_cut_end - 0.1)) {
+		max_duty = 0.0;
+	} else {
+		max_duty = utils_map(rpm_now, rpm_pos_cut_start, rpm_pos_cut_end,  conf_now->l_max_duty, 0.0);
+	}
+
+	// RPM min
+	const float rpm_neg_cut_start = conf_now->l_min_erpm * conf_now->l_erpm_start;
+	const float rpm_neg_cut_end = conf_now->l_min_erpm;
+	if (rpm_now > (rpm_neg_cut_start - 0.1)) {
+		// pass 
+	} else if (rpm_now < (rpm_neg_cut_end + 0.1)) {
+		max_duty = 0.0;
+	} else {
+		max_duty = utils_map(fabsf(rpm_now), fabsf(rpm_neg_cut_start), fabsf(rpm_neg_cut_end), conf_now->l_max_duty,0.0);
+	}
+
 	// Park transform: transforms the currents from stator to the rotor reference frame
 	state_m->id = c * state_m->i_alpha + s * state_m->i_beta;
 	state_m->iq = c * state_m->i_beta  - s * state_m->i_alpha;
