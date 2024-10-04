@@ -2397,29 +2397,29 @@ static void update_override_limits(volatile motor_if_state_t *motor, volatile mc
 				temp_motor_accel_end, l_current_max_tmp, 0.0);
 	}
 
-	// RPM max
-	float lo_max_rpm = 0.0;
-	const float rpm_pos_cut_start = conf->l_max_erpm * conf->l_erpm_start;
-	const float rpm_pos_cut_end = conf->l_max_erpm;
-	if (rpm_now < (rpm_pos_cut_start + 0.1)) {
-		lo_max_rpm = l_current_max_tmp;
-	} else if (rpm_now > (rpm_pos_cut_end - 0.1)) {
-		lo_max_rpm = 0.0;
-	} else {
-		lo_max_rpm = utils_map(rpm_now, rpm_pos_cut_start, rpm_pos_cut_end, l_current_max_tmp, 0.0);
-	}
+	// // RPM max
+	// float lo_max_rpm = 0.0;
+	// const float rpm_pos_cut_start = conf->l_max_erpm * conf->l_erpm_start;
+	// const float rpm_pos_cut_end = conf->l_max_erpm;
+	// if (rpm_now < (rpm_pos_cut_start + 0.1)) {
+	// 	lo_max_rpm = l_current_max_tmp;
+	// } else if (rpm_now > (rpm_pos_cut_end - 0.1)) {
+	// 	lo_max_rpm = 0.0;
+	// } else {
+	// 	lo_max_rpm = utils_map(rpm_now, rpm_pos_cut_start, rpm_pos_cut_end, l_current_max_tmp, 0.0);
+	// }
 
-	// RPM min
-	float lo_min_rpm = 0.0;
-	const float rpm_neg_cut_start = conf->l_min_erpm * conf->l_erpm_start;
-	const float rpm_neg_cut_end = conf->l_min_erpm;
-	if (rpm_now > (rpm_neg_cut_start - 0.1)) {
-		lo_min_rpm = l_current_max_tmp;
-	} else if (rpm_now < (rpm_neg_cut_end + 0.1)) {
-		lo_min_rpm = 0.0;
-	} else {
-		lo_min_rpm = utils_map(rpm_now, rpm_neg_cut_start, rpm_neg_cut_end, l_current_max_tmp, 0.0);
-	}
+	// // RPM min
+	// float lo_min_rpm = 0.0;
+	// const float rpm_neg_cut_start = conf->l_min_erpm * conf->l_erpm_start;
+	// const float rpm_neg_cut_end = conf->l_min_erpm;
+	// if (rpm_now > (rpm_neg_cut_start - 0.1)) {
+	// 	lo_min_rpm = l_current_max_tmp;
+	// } else if (rpm_now < (rpm_neg_cut_end + 0.1)) {
+	// 	lo_min_rpm = 0.0;
+	// } else {
+	// 	lo_min_rpm = utils_map(rpm_now, rpm_neg_cut_start, rpm_neg_cut_end, l_current_max_tmp, 0.0);
+	// }
 
 	// Start Current Decrease
 	float lo_max_curr_dec = l_current_max_tmp;
@@ -2495,8 +2495,8 @@ static void update_override_limits(volatile motor_if_state_t *motor, volatile mc
 	float lo_max = utils_min_abs(lo_max_mos, lo_max_mot);
 	float lo_min = utils_min_abs(lo_min_mos, lo_min_mot);
 
-	lo_max = utils_min_abs(lo_max, lo_max_rpm);
-	lo_max = utils_min_abs(lo_max, lo_min_rpm);
+	// lo_max = utils_min_abs(lo_max, lo_max_rpm);
+	// lo_max = utils_min_abs(lo_max, lo_min_rpm);
 	lo_max = utils_min_abs(lo_max, lo_max_curr_dec);
 	lo_max = utils_min_abs(lo_max, lo_fet_temp_accel);
 	lo_max = utils_min_abs(lo_max, lo_motor_temp_accel);
