@@ -3624,33 +3624,33 @@ void mcpwm_foc_adc_int_handler(void *p, uint32_t flags) {
 	motor_now->m_tachometer_abs += abs(diff);
 
 	// Track position control angle
-	float angle_now = 0.0;
+	float current_raw_angle = 0.0;
 	if (encoder_is_configured()) {
 		if (conf_now->m_sensor_port_mode == SENSOR_PORT_MODE_TS5700N8501_MULTITURN) {
-			angle_now = encoder_read_deg_multiturn();
+			current_raw_angle = encoder_read_deg_multiturn();
 		} else {
-			angle_now = enc_ang;
+			current_raw_angle = enc_ang;
 		}
 	} else {
-		angle_now = RAD2DEG_f(motor_now->m_motor_state.phase);
+		current_raw_angle = RAD2DEG_f(motor_now->m_motor_state.phase);
 	}
 
-	utils_norm_angle(&angle_now);
+	utils_norm_angle(&current_raw_angle);
 
 	if (conf_now->p_pid_ang_div > 0.98 && conf_now->p_pid_ang_div < 1.02) {
-		motor_now->m_pos_pid_now = angle_now;
+		motor_now->m_pos_pid_now = current_raw_angle;
 	} else {
-		if (angle_now < 90.0 && motor_now->m_pid_div_angle_last > 270.0) {
+		if (current_raw_angle < 90.0 && motor_now->m_pid_div_angle_last > 270.0) {
 			motor_now->m_pid_div_angle_accumulator += 360.0 / conf_now->p_pid_ang_div;
 			utils_norm_angle((float*)&motor_now->m_pid_div_angle_accumulator);
-		} else if (angle_now > 270.0 && motor_now->m_pid_div_angle_last < 90.0) {
+		} else if (current_raw_angle > 270.0 && motor_now->m_pid_div_angle_last < 90.0) {
 			motor_now->m_pid_div_angle_accumulator -= 360.0 / conf_now->p_pid_ang_div;
 			utils_norm_angle((float*)&motor_now->m_pid_div_angle_accumulator);
 		}
 
-		motor_now->m_pid_div_angle_last = angle_now;
+		motor_now->m_pid_div_angle_last = current_raw_angle;
 
-		motor_now->m_pos_pid_now = motor_now->m_pid_div_angle_accumulator + angle_now / conf_now->p_pid_ang_div;
+		motor_now->m_pos_pid_now = motor_now->m_pid_div_angle_accumulator + current_raw_angle / conf_now->si_gear_ratio / conf_now->p_pid_ang_div;
 		utils_norm_angle((float*)&motor_now->m_pos_pid_now);
 	}
 
@@ -4290,6 +4290,30 @@ static void control_current(motor_all_state_t *motor, float dt) {
 
 	float max_duty = fabsf(state_m->max_duty);
 	utils_truncate_number(&max_duty, 0.0, conf_now->l_max_duty);
+
+	float rpm_now = mc_interface_get_rpm();
+
+    // RPM max
+	const float rpm_pos_cut_start = conf_now->l_max_erpm * conf_now->l_erpm_start;
+	const float rpm_pos_cut_end = conf_now->l_max_erpm;
+	if (rpm_now < (rpm_pos_cut_start + 0.1)) {
+		// pass
+	} else if (rpm_now > (rpm_pos_cut_end - 0.1)) {
+		max_duty = 0.0;
+	} else {
+		max_duty = utils_map(rpm_now, rpm_pos_cut_start, rpm_pos_cut_end,  conf_now->l_max_duty, 0.0);
+	}
+
+	// RPM min
+	const float rpm_neg_cut_start = conf_now->l_min_erpm * conf_now->l_erpm_start;
+	const float rpm_neg_cut_end = conf_now->l_min_erpm;
+	if (rpm_now > (rpm_neg_cut_start - 0.1)) {
+		// pass 
+	} else if (rpm_now < (rpm_neg_cut_end + 0.1)) {
+		max_duty = 0.0;
+	} else {
+		max_duty = utils_map(fabsf(rpm_now), fabsf(rpm_neg_cut_start), fabsf(rpm_neg_cut_end), conf_now->l_max_duty,0.0);
+	}
 
 	// Park transform: transforms the currents from stator to the rotor reference frame
 	state_m->id = c * state_m->i_alpha + s * state_m->i_beta;
