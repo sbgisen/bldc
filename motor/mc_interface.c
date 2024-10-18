@@ -1486,8 +1486,9 @@ void mc_interface_update_pid_pos_offset(float angle_now, bool store) {
 			angle_potentiometer_sum / adc_avg_window_size;
 		mcconf->p_pid_offset = angle_potentiometer-angle_now;
 	}else{
-		mcconf->p_pid_offset += mc_interface_get_pid_pos_now() - angle_now;
-	}
+          mcconf->p_pid_offset += (mc_interface_get_pid_pos_now() - angle_now) *
+                                  mcconf->p_pid_ang_div;
+        }
 
 	utils_norm_angle(&mcconf->p_pid_offset);
 
