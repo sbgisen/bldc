@@ -3636,21 +3636,22 @@ void mcpwm_foc_adc_int_handler(void *p, uint32_t flags) {
 	}
 
 	utils_norm_angle(&raw_angle_now);
+	float ang_div = conf_now->p_pid_ang_div*conf_now->si_gear_ratio;
 
-	if (conf_now->p_pid_ang_div > 0.98 && conf_now->p_pid_ang_div < 1.02) {
+	if (ang_div > 0.98 && ang_div < 1.02) {
 		motor_now->m_pos_pid_now = raw_angle_now;
 	} else {
 		if (raw_angle_now < 90.0 && motor_now->m_pid_div_angle_last > 270.0) {
-			motor_now->m_pid_div_angle_accumulator += 360.0 / conf_now->p_pid_ang_div;
+			motor_now->m_pid_div_angle_accumulator += 360.0 / ang_div;
 			utils_norm_angle((float*)&motor_now->m_pid_div_angle_accumulator);
 		} else if (raw_angle_now > 270.0 && motor_now->m_pid_div_angle_last < 90.0) {
-			motor_now->m_pid_div_angle_accumulator -= 360.0 / conf_now->p_pid_ang_div;
+			motor_now->m_pid_div_angle_accumulator -= 360.0 / ang_div;
 			utils_norm_angle((float*)&motor_now->m_pid_div_angle_accumulator);
 		}
 
 		motor_now->m_pid_div_angle_last = raw_angle_now;
 
-		motor_now->m_pos_pid_now = motor_now->m_pid_div_angle_accumulator + raw_angle_now / conf_now->si_gear_ratio / conf_now->p_pid_ang_div;
+		motor_now->m_pos_pid_now = motor_now->m_pid_div_angle_accumulator + raw_angle_now / ang_div;
 		utils_norm_angle((float*)&motor_now->m_pos_pid_now);
 	}
 
