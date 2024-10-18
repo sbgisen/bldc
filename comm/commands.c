@@ -508,7 +508,9 @@ void commands_process_packet(unsigned char *data, unsigned int len,
 
 	case COMM_SET_POS: {
 		int32_t ind = 0;
-		mc_interface_set_pid_pos((float)buffer_get_int32(data, &ind) / 1000000.0);
+		volatile mc_configuration *conf = mc_interface_get_configuration();
+		float angle = (float)buffer_get_int32(data, &ind) / 100000.0;
+		mc_interface_set_pid_pos(angle/conf->p_pid_ang_div);
 		timeout_reset();
 	} break;
 

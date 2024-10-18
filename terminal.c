@@ -1127,7 +1127,13 @@ void terminal_process_string(char *str) {
 				commands_printf("Invalid arguments\n");
 			}
 		}
-	} else if (strcmp(argv[0], "fwinfo") == 0) {
+	} else if (strcmp(argv[0],"get_current_angle")==0){
+		if(argc == 1) {
+			const volatile mc_configuration *mcconf = mc_interface_get_configuration();
+			float target_angle = mc_interface_get_pid_pos_now()*mcconf->p_pid_ang_div;
+			commands_printf("Current angle: %.2f", (double)target_angle);
+		}
+	}else if (strcmp(argv[0], "fwinfo") == 0) {
 		commands_printf("GIT Branch: %s", GIT_BRANCH_NAME);
 		commands_printf("GIT Hash  : %s", GIT_COMMIT_HASH);
 		commands_printf("Compiler  : %s\n", ARM_GCC_VERSION);
