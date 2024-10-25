@@ -444,7 +444,7 @@ void commands_process_packet(unsigned char *data, unsigned int len,
 		}
 		if (mask & ((uint32_t)1 << 16)) {
 			const volatile mc_configuration *conf = mc_interface_get_configuration();
-			buffer_append_float32(send_buffer, mc_interface_get_pid_pos_now()*conf->p_pid_ang_div, 1e6, &ind);
+			buffer_append_float32(send_buffer, mc_interface_get_pid_pos_now()*conf->p_pid_ang_div, 1e5, &ind);
 		}
 		if (mask & ((uint32_t)1 << 17)) {
 			uint8_t current_controller_id = app_get_configuration()->controller_id;
