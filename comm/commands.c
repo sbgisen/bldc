@@ -443,7 +443,8 @@ void commands_process_packet(unsigned char *data, unsigned int len,
 			send_buffer[ind++] = mc_interface_get_fault();
 		}
 		if (mask & ((uint32_t)1 << 16)) {
-			buffer_append_float32(send_buffer, mc_interface_get_pid_pos_now(), 1e6, &ind);
+			const volatile mc_configuration *conf = mc_interface_get_configuration();
+			buffer_append_float32(send_buffer, mc_interface_get_pid_pos_now()*conf->p_pid_ang_div, 1e5, &ind);
 		}
 		if (mask & ((uint32_t)1 << 17)) {
 			uint8_t current_controller_id = app_get_configuration()->controller_id;
@@ -508,7 +509,7 @@ void commands_process_packet(unsigned char *data, unsigned int len,
 
 	case COMM_SET_POS: {
 		int32_t ind = 0;
-		volatile mc_configuration *conf = mc_interface_get_configuration();
+		const volatile mc_configuration *conf = mc_interface_get_configuration();
 		float angle = (float)buffer_get_int32(data, &ind) / 100000.0;
 		mc_interface_set_pid_pos(angle/conf->p_pid_ang_div);
 		timeout_reset();
@@ -842,7 +843,8 @@ void commands_process_packet(unsigned char *data, unsigned int len,
 			buffer_append_float32(send_buffer, mc_interface_get_distance_abs(), 1e3, &ind);
 		}
 		if (mask & ((uint32_t)1 << 15)) {
-			buffer_append_float32(send_buffer, mc_interface_get_pid_pos_now(), 1e6, &ind);
+			const volatile mc_configuration *conf = mc_interface_get_configuration();
+			buffer_append_float32(send_buffer, mc_interface_get_pid_pos_now()*conf->p_pid_ang_div, 1e6, &ind);
 		}
 		if (mask & ((uint32_t)1 << 16)) {
 			send_buffer[ind++] = mc_interface_get_fault();
