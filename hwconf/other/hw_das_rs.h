@@ -21,7 +21,7 @@
 #define HW_NAME					"DAS_RS"
 
 // HW properties
-#define HW_HAS_DRV8313
+#define GATE_DRIVE_HAS_EN_PIN
 #define HW_HAS_3_SHUNTS
 #define HW_HAS_PHASE_SHUNTS
 

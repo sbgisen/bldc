@@ -26,7 +26,7 @@
 #define HW_HAS_3_SHUNTS
 #define HW_HAS_PHASE_SHUNTS
 #define HW_HAS_PHASE_FILTERS
-#define HW_HAS_DRV8313
+#define GATE_DRIVE_HAS_EN_PIN
 
 // Macros
 #define LED_GREEN_GPIO			GPIOB

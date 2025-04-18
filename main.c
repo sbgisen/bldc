@@ -258,7 +258,7 @@ int main(void) {
 	// Initialize the enable pins here and disable them
 	// to avoid excessive current draw at boot because of
 	// floating pins.
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 	INIT_BR();
 #endif
 

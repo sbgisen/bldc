@@ -4928,7 +4928,7 @@ static void stop_pwm_hw(motor_all_state_t *motor) {
 		TIM_GenerateEvent(TIM8, TIM_EventSource_COM);
 #endif
 
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 		DISABLE_BR();
 #endif
 		PHASE_FILTER_OFF();
@@ -4994,7 +4994,7 @@ static void start_pwm_hw(motor_all_state_t *motor) {
 		// Generate COM event in ADC interrupt to get better synchronization
 		//	TIM_GenerateEvent(TIM1, TIM_EventSource_COM);
 
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 		ENABLE_BR();
 #endif
 		PHASE_FILTER_ON();
@@ -5037,7 +5037,7 @@ static void full_brake_hw(motor_all_state_t *motor) {
 		TIM_GenerateEvent(TIM1, TIM_EventSource_COM);
 		PHASE_FILTER_ON();
 
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 		ENABLE_BR();
 #endif
 

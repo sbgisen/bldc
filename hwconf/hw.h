@@ -75,7 +75,7 @@
  */
 
 /*
- * #define HW_HAS_DRV8313
+ * #define GATE_DRIVE_HAS_EN_PIN
  *
  * Use the DRV8313 driver. Changes how the
  * output is switched off and runs an early init hook.

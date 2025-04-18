@@ -908,7 +908,7 @@ static void stop_pwm_ll(void) {
 }
 
 static void stop_pwm_hw(void) {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 	DISABLE_BR();
 #endif
 
@@ -936,7 +936,7 @@ static void full_brake_ll(void) {
 }
 
 static void full_brake_hw(void) {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 	ENABLE_BR();
 #endif
 
@@ -2745,7 +2745,7 @@ static void set_next_comm_step(int next_step) {
 
 	if (next_step == 1) {
 		if (direction) {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 			DISABLE_BR1();
 			ENABLE_BR2();
 			ENABLE_BR3();
@@ -2765,7 +2765,7 @@ static void set_next_comm_step(int next_step) {
 			TIM_CCxCmd(TIM1, TIM_Channel_3, negative_highside);
 			TIM_CCxNCmd(TIM1, TIM_Channel_3, negative_lowside);
 		} else {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 			DISABLE_BR1();
 			ENABLE_BR3();
 			ENABLE_BR2();
@@ -2787,7 +2787,7 @@ static void set_next_comm_step(int next_step) {
 		}
 	} else if (next_step == 2) {
 		if (direction) {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 			DISABLE_BR2();
 			ENABLE_BR1();
 			ENABLE_BR3();
@@ -2807,7 +2807,7 @@ static void set_next_comm_step(int next_step) {
 			TIM_CCxCmd(TIM1, TIM_Channel_3, negative_highside);
 			TIM_CCxNCmd(TIM1, TIM_Channel_3, negative_lowside);
 		} else {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 			DISABLE_BR3();
 			ENABLE_BR1();
 			ENABLE_BR2();
@@ -2829,7 +2829,7 @@ static void set_next_comm_step(int next_step) {
 		}
 	} else if (next_step == 3) {
 		if (direction) {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 			DISABLE_BR3();
 			ENABLE_BR1();
 			ENABLE_BR2();
@@ -2849,7 +2849,7 @@ static void set_next_comm_step(int next_step) {
 			TIM_CCxCmd(TIM1, TIM_Channel_2, negative_highside);
 			TIM_CCxNCmd(TIM1, TIM_Channel_2, negative_lowside);
 		} else {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 			DISABLE_BR2();
 			ENABLE_BR1();
 			ENABLE_BR3();
@@ -2871,7 +2871,7 @@ static void set_next_comm_step(int next_step) {
 		}
 	} else if (next_step == 4) {
 		if (direction) {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 			DISABLE_BR1();
 			ENABLE_BR3();
 			ENABLE_BR2();
@@ -2891,7 +2891,7 @@ static void set_next_comm_step(int next_step) {
 			TIM_CCxCmd(TIM1, TIM_Channel_2, negative_highside);
 			TIM_CCxNCmd(TIM1, TIM_Channel_2, negative_lowside);
 		} else {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 			DISABLE_BR1();
 			ENABLE_BR2();
 			ENABLE_BR3();
@@ -2913,7 +2913,7 @@ static void set_next_comm_step(int next_step) {
 		}
 	} else if (next_step == 5) {
 		if (direction) {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 			DISABLE_BR2();
 			ENABLE_BR3();
 			ENABLE_BR1();
@@ -2933,7 +2933,7 @@ static void set_next_comm_step(int next_step) {
 			TIM_CCxCmd(TIM1, TIM_Channel_1, negative_highside);
 			TIM_CCxNCmd(TIM1, TIM_Channel_1, negative_lowside);
 		} else {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 			DISABLE_BR3();
 			ENABLE_BR2();
 			ENABLE_BR1();
@@ -2955,7 +2955,7 @@ static void set_next_comm_step(int next_step) {
 		}
 	} else if (next_step == 6) {
 		if (direction) {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 			DISABLE_BR3();
 			ENABLE_BR2();
 			ENABLE_BR1();
@@ -2975,7 +2975,7 @@ static void set_next_comm_step(int next_step) {
 			TIM_CCxCmd(TIM1, TIM_Channel_1, negative_highside);
 			TIM_CCxNCmd(TIM1, TIM_Channel_1, negative_lowside);
 		} else {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 			DISABLE_BR2();
 			ENABLE_BR3();
 			ENABLE_BR1();
@@ -2996,7 +2996,7 @@ static void set_next_comm_step(int next_step) {
 			TIM_CCxNCmd(TIM1, TIM_Channel_1, negative_lowside);
 		}
 	} else {
-#ifdef HW_HAS_DRV8313
+#ifdef GATE_DRIVE_HAS_EN_PIN
 		DISABLE_BR1();
 		DISABLE_BR2();
 		DISABLE_BR3();

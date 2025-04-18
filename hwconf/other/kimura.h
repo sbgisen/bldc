@@ -23,7 +23,7 @@
 #define HW_NAME					"MINI4"
 
 // HW properties
-#define HW_HAS_DRV8313
+#define GATE_DRIVE_HAS_EN_PIN
 #define HW_HAS_3_SHUNTS
 #define HW_HAS_PERMANENT_NRF
 #define HW_HAS_PHASE_SHUNTS
