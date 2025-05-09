@@ -20,7 +20,7 @@
 #ifndef HW_KIMURA_H_
 #define HW_KIMURA_H_
 
-#define HW_NAME					"MINI4"
+#define HW_NAME					"KIMURA"
 
 // HW properties
 #define GATE_DRIVE_HAS_EN_PIN
@@ -116,7 +116,7 @@
 #define CURRENT_AMP_GAIN		60.0
 #endif
 #ifndef CURRENT_SHUNT_RES
-#define CURRENT_SHUNT_RES		0.0005
+#define CURRENT_SHUNT_RES		0.005
 #endif
 
 // Input voltage
@@ -217,7 +217,7 @@
 #define READ_HALL2()			palReadPad(HW_HALL_ENC_GPIO2, HW_HALL_ENC_PIN2)
 #define READ_HALL3()			palReadPad(HW_HALL_ENC_GPIO3, HW_HALL_ENC_PIN3)
 
-#define HW_DEAD_TIME_NSEC		120.0
+#define HW_DEAD_TIME_NSEC		0.0
 
 // Default setting overrides
 #ifndef MCCONF_DEFAULT_MOTOR_TYPE
