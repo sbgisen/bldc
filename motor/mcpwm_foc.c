@@ -3624,33 +3624,33 @@ void mcpwm_foc_adc_int_handler(void *p, uint32_t flags) {
 	motor_now->m_tachometer_abs += abs(diff);
 
 	// Track position control angle
-	float current_raw_angle = 0.0;
+	float angle_now = 0.0;
 	if (encoder_is_configured()) {
 		if (conf_now->m_sensor_port_mode == SENSOR_PORT_MODE_TS5700N8501_MULTITURN) {
-			current_raw_angle = encoder_read_deg_multiturn();
+			angle_now = encoder_read_deg_multiturn();
 		} else {
-			current_raw_angle = enc_ang;
+			angle_now = enc_ang;
 		}
 	} else {
-		current_raw_angle = RAD2DEG_f(motor_now->m_motor_state.phase);
+		angle_now = RAD2DEG_f(motor_now->m_motor_state.phase);
 	}
 
-	utils_norm_angle(&current_raw_angle);
+	utils_norm_angle(&angle_now);
 
 	if (conf_now->p_pid_ang_div > 0.98 && conf_now->p_pid_ang_div < 1.02) {
-		motor_now->m_pos_pid_now = current_raw_angle;
+		motor_now->m_pos_pid_now = angle_now;
 	} else {
-		if (current_raw_angle < 90.0 && motor_now->m_pid_div_angle_last > 270.0) {
+		if (angle_now < 90.0 && motor_now->m_pid_div_angle_last > 270.0) {
 			motor_now->m_pid_div_angle_accumulator += 360.0 / conf_now->p_pid_ang_div;
 			utils_norm_angle((float*)&motor_now->m_pid_div_angle_accumulator);
-		} else if (current_raw_angle > 270.0 && motor_now->m_pid_div_angle_last < 90.0) {
+		} else if (angle_now > 270.0 && motor_now->m_pid_div_angle_last < 90.0) {
 			motor_now->m_pid_div_angle_accumulator -= 360.0 / conf_now->p_pid_ang_div;
 			utils_norm_angle((float*)&motor_now->m_pid_div_angle_accumulator);
 		}
 
-		motor_now->m_pid_div_angle_last = current_raw_angle;
+		motor_now->m_pid_div_angle_last = angle_now;
 
-		motor_now->m_pos_pid_now = motor_now->m_pid_div_angle_accumulator + current_raw_angle / conf_now->si_gear_ratio / conf_now->p_pid_ang_div;
+		motor_now->m_pos_pid_now = motor_now->m_pid_div_angle_accumulator + angle_now / conf_now->p_pid_ang_div;
 		utils_norm_angle((float*)&motor_now->m_pos_pid_now);
 	}
 
