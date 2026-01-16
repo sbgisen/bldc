@@ -23,7 +23,7 @@
 #define HW_NAME					"MINI4_BASED_KIMURA"
 
 // HW properties
-#define HW_HAS_DRV8301
+#define HW_HAS_DRV8313
 #define HW_HAS_3_SHUNTS
 #define HW_HAS_PERMANENT_NRF
 #define HW_HAS_PHASE_SHUNTS
@@ -40,6 +40,27 @@
 #define LED_GREEN_OFF()			palClearPad(GPIOB, 0)
 #define LED_RED_ON()			palSetPad(GPIOB, 1)
 #define LED_RED_OFF()			palClearPad(GPIOB, 1)
+
+// For power stages with enable pins (e.g. DRV8313)
+#define ENABLE_BR1()			palSetPad(GPIOB, 13)
+#define ENABLE_BR2()			palSetPad(GPIOB, 14)
+#define ENABLE_BR3()			palSetPad(GPIOB, 15)
+#define DISABLE_BR1()			palClearPad(GPIOB, 13)
+#define DISABLE_BR2()			palClearPad(GPIOB, 14)
+#define DISABLE_BR3()			palClearPad(GPIOB, 15)
+#define ENABLE_BR()				palWriteGroup(GPIOB, PAL_GROUP_MASK(3), 13, 7)
+#define DISABLE_BR()			palWriteGroup(GPIOB, PAL_GROUP_MASK(3), 13, 0)
+
+#define INIT_BR()				palSetPadMode(GPIOB, 13, \
+								PAL_MODE_OUTPUT_PUSHPULL | \
+								PAL_STM32_OSPEED_HIGHEST); \
+								palSetPadMode(GPIOB, 14, \
+								PAL_MODE_OUTPUT_PUSHPULL | \
+								PAL_STM32_OSPEED_HIGHEST); \
+								palSetPadMode(GPIOB, 15, \
+								PAL_MODE_OUTPUT_PUSHPULL | \
+								PAL_STM32_OSPEED_HIGHEST); \
+								DISABLE_BR();
 
 /*
  * ADC Vector
@@ -95,7 +116,7 @@
 #define CURRENT_AMP_GAIN		60.0
 #endif
 #ifndef CURRENT_SHUNT_RES
-#define CURRENT_SHUNT_RES		0.0005
+#define CURRENT_SHUNT_RES		0.005
 #endif
 
 // Input voltage
@@ -125,7 +146,7 @@
 
 // COMM-port ADC GPIOs
 #define HW_ADC_EXT_GPIO			GPIOA
-#define HW_ADC_EXT_PIN			5
+#define HW_ADC_EXT_PIN			4
 #define HW_ADC_EXT2_GPIO		GPIOA
 #define HW_ADC_EXT2_PIN			6
 
